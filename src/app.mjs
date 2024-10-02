@@ -5,6 +5,8 @@ import session from "express-session";
 import passport from "passport";
 import "./strategies/local-strategy.mjs";
 import { ensureAuthenticated } from "./utils/middlewares.mjs";
+import multipleUsersRouter from "./routes/multipleUsers.mjs";
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -24,6 +26,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(router);
+app.use(multipleUsersRouter);
 
 app.post("/api/auth", passport.authenticate("local"), (req, res) => {
   res.sendStatus(200);
