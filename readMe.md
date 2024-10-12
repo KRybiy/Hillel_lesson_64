@@ -57,7 +57,8 @@ The server will run on port 3000 (or the port specified in the environment varia
    {
      "email": "example@example.com",
      "displayName": "ExampleUser",
-     "password": "yourpassword"
+     "password": "yourpassword",
+     "age": 99
    }
    ````
    **Response:** Returns the created user object if successful, or an error message if validation fails.
