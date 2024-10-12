@@ -39,12 +39,7 @@ The server will run on port 3000 (or the port specified in the environment varia
 
 1. **Get Users**  
    **Endpoint:** `GET /api/users`  
-   **Description:** Retrieves a list of users. You can filter the users by query parameters.  
-   **Query Parameters:**
-
-   - `filter` (string, required): The field to filter users on (e.g., `email`, `displayName`).
-   - `value` (string, optional): The value to filter by.  
-     **Response:** Returns a list of users matching the filter or all users if no filter is provided.
+   **Description:** Retrieves a list of users. 
 
 1.1 **Get Users Older Than 25**
 
@@ -64,9 +59,9 @@ The server will run on port 3000 (or the port specified in the environment varia
      "displayName": "ExampleUser",
      "password": "yourpassword"
    }
-    ```
-   **Response:** Returns the created user object if successful, or an error message if validation fails.
    ````
+   **Response:** Returns the created user object if successful, or an error message if validation fails.
+  
 3. **Get User by ID**  
    **Endpoint:** `GET /api/users/:id`  
    **Description:** Retrieves a user by their ID.  
@@ -116,12 +111,14 @@ The server will run on port 3000 (or the port specified in the environment varia
      {
        "email": "user1@example.com",
        "displayName": "User One",
-       "password": "password1"
+       "password": "password1",
+       "age": 22
      },
      {
        "email": "user2@example.com",
        "displayName": "User Two",
-       "password": "password2"
+       "password": "password2",
+       "age": 21
      }
    ]
    ```
@@ -149,7 +146,8 @@ The server will run on port 3000 (or the port specified in the environment varia
    {
      "email": "newemail@example.com",
      "displayName": "NewDisplayName",
-     "password": "newpassword"
+     "password": "newpassword",
+     "age": 17
    }
    ```
 
@@ -164,12 +162,14 @@ The server will run on port 3000 (or the port specified in the environment varia
      {
        "email": "user1@example.com",
        "displayName": "User1",
-       "password": "password1"
+       "password": "password1",
+       "age": 23
      },
      {
        "email": "user2@example.com",
        "displayName": "User2",
-       "password": "password2"
+       "password": "password2",
+       "age": 34
      }
    ]
    ```
@@ -238,7 +238,8 @@ To register a new user, send a `POST` request to `/api/users` with the following
 {
   "email": "user@example.com",
   "displayName": "User Name",
-  "password": "yourpassword"
+  "password": "yourpassword",
+  "age": 27
 }
 ```
 
