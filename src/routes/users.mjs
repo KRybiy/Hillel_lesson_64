@@ -44,17 +44,47 @@ router.post(
 
 router.get("/api/users", async (req, res) => {
   try {
-    const usersList = await users.find({}).toArray();
-    res.status(200).json(usersList);
+    const cursor = users.find({});  
+    const usersList = [];
+    
+    
+    await cursor.forEach(user => {
+      usersList.push(user); 
+    });
+
+    res.status(200).json(usersList); 
   } catch (error) {
     console.error("Error retrieving users:", error);
     res.status(500).send("Error retrieving users");
   }
 });
 
+router.get("/api/users/olderThan25", async (req, res) => {
+  try {
+    const cursor = users.find({ age: { $gt: 25 } });
+
+    const usersList = [];
+
+    await cursor.forEach(user => {
+      usersList.push(user);
+    });
+
+    if (usersList.length > 0) {
+      res.status(200).json(usersList);  
+    } else {
+      res.status(404).send("No users found older than 25");
+    }
+  } catch (error) {
+    console.error("Error retrieving users:", error);
+    res.status(500).send("Error retrieving users");
+  }
+});
+
+
+
 function convertToObjectId(userId) {
   try {
-    return new ObjectId({value: userId});
+    return new ObjectId(userId);
   } catch (error) {
     throw new Error("Invalid user ID");
   }
@@ -131,6 +161,31 @@ router.patch("/api/users/:id", async (req, res) => {
     res.status(500).send("Error updating user");
   }
 });
+
+
+
+router.get("/api/aggregation", async (req, res) => {
+  try {
+    if (!users) {
+      return res.status(500).send("Database connection not established");
+    }
+
+    const aggregationResult = await users.aggregate([
+      { $group: { _id: null, averageAge: { $avg: "$age" } } }
+    ]).toArray();
+
+    const result = aggregationResult.length > 0 ? {
+      averageAge: Math.round(aggregationResult[0].averageAge * 100) / 100 
+    } : { averageAge: 0 }; 
+
+    res.status(200).json(result);
+  } catch (error) {
+    console.error("Error with aggregation query:", error);
+    res.status(500).send("Error performing aggregation");
+  }
+});
+
+
 
 connectToDb().catch(console.dir);
 

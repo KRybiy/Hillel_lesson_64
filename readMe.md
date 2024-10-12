@@ -46,6 +46,14 @@ The server will run on port 3000 (or the port specified in the environment varia
    - `value` (string, optional): The value to filter by.  
      **Response:** Returns a list of users matching the filter or all users if no filter is provided.
 
+1.1 **Get Users Older Than 25**
+
+- **URL:** `GET /api/users/olderThan25`
+- **Description:** Retrieves users who are older than 25.
+- **Response:**
+  - `200 OK` with a list of users older than 25.
+  - `404 Not Found` if no users are found who meet the criteria.
+
 2. **Create User**  
     **Endpoint:** `POST /api/users`  
     **Description:** Registers a new user.  
@@ -262,3 +270,24 @@ If you are not authenticated, you will receive a `401 Unauthorized` status.
 ### Logging Out
 
 To log out, send a `POST` request to `/api/logout`. If the logout is successful, you will receive a `200 OK` status. If you are not logged in, you will receive a `401 Unauthorized` status.
+
+### Aggregation Endpoint
+
+- **URL**: `http://localhost:3000/api/aggregation`
+- **Method**: `GET`
+- **Description**: Returns the average age of all users in the database.
+
+#### Example Request
+
+```http
+GET /api/aggregation
+
+```
+
+Example Response
+
+```json
+{
+  "averageAge": 27.56
+}
+```
